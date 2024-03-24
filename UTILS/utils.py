@@ -44,6 +44,7 @@ def get_mnist(data_path,lower_limit = None,shuffle_data = False):
         lower_limit: float between 0 and 1 denoting the percentage of the data we wish to extract
         shuffle_data: boolean value denoting whether to shuffle or not the data. The convention is to shuffle for the training set
     """
+    shuffle_data = float(shuffle_data)
     dataset = pd.read_csv(data_path)
     data = dataset.to_numpy()
     # dataset shape:  (42000, 785) where columns 0 are the labels and col [1:785] are pixel values

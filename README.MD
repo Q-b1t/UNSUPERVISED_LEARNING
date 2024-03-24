@@ -1,0 +1,2 @@
+# Unsupervised Learning 
+Some implementations of unsupervised learning. They are operational, but the project is simply for my own leisure and to futher my understanding of bayesian classifers, multimodal distributions, clustering, variational autoencoders, and generative adversarial networks.

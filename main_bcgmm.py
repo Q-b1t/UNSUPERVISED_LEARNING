@@ -1,10 +1,11 @@
-import BayesClassifier
+from BAYESIAN_CLASIFIER_GMM import BayesClassifierGMM as BayesClassifierGMM
 import matplotlib.pyplot as plt
-import utils
+from UTILS import utils as utils
+import os
 
 if __name__ == "__main__":
     dataset_name = "mnist_kaggle"
-    lower_limit = 0.5
+    lower_limit = 1.0
     fp = utils.verify_input_folder(dataset_directory=dataset_name)
     fpp = utils.verify_files(["train.csv","test.csv","sample_submission.csv"],full_path=fp)
     if fpp:
@@ -13,17 +14,15 @@ if __name__ == "__main__":
         X,y = utils.get_mnist(data_path=train_file,lower_limit=lower_limit)
         print(f"[+] Retrived {len(X)} samples")
         print(f"[~] Features shape: {X.shape}\n[~] Labels shape: {y.shape}")
-        bc = BayesClassifier.BayesClassifier()
+        bc = BayesClassifierGMM.BayesClassifierGMM()
         bc.fit(X,y)
         bc.plot_probability()
         sample = bc.sample_given_y(0)
-        print(sample.shape)
         for k in range(bc.K):
             # show one sample for each class
             # also show the mean image learned
 
-            sample = bc.sample_given_y(k).reshape(28, 28)
-            mean = bc.gaussians[k]['m'].reshape(28, 28)
+            sample,mean = bc.sample_given_y(k)
 
             plt.subplot(1,2,1)
             plt.imshow(sample, cmap='gray')
@@ -38,6 +37,5 @@ if __name__ == "__main__":
         plt.imshow(sample, cmap='gray')
         plt.title("Random Sample from Random Class")
         plt.show()
-
     else:
         print("[-] Error in reading files, aborting...")
